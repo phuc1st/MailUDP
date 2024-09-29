@@ -76,7 +76,17 @@ public class EmailServer extends Thread {
 		String directory = "D:\\eclipse-workspace\\MailUDP\\Data\\" + username;
 		File file = new File(directory);
 		if (!file.exists())
+		{
 			file.mkdirs();
+			String filePath = directory + "\\new_email.txt";
+			try (FileWriter writer = new FileWriter(filePath, true)) {
+				writer.write("Thank you for using this service. we hope that you will feel comfortabl........");
+				this.mainForm.appendMessage("Thư đã được lưu vào " + filePath);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+			
 	}
 	private void readEmails(String user, DatagramSocket socket, InetAddress address, int clientPort) {
 		this.mainForm.appendMessage("Đang đọc mail của người dùng: "+ user);
@@ -88,8 +98,12 @@ public class EmailServer extends Thread {
 			if (files != null) {
 				for (File file : files) {
 					try {
-						String content = new String(Files.readAllBytes(file.toPath()));
+						System.out.println(file.getName());
+						if(!file.getName().equalsIgnoreCase("new_email.txt")) {
+							String content = new String(Files.readAllBytes(file.toPath()));
 						sendResponse(socket, address,clientPort, content);
+						}
+						
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
