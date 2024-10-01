@@ -9,6 +9,7 @@ package master;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
@@ -141,7 +142,6 @@ public class MainForm extends JFrame {
 	public static void main(String[] args) {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-			
 				new MainForm().setVisible(true);
 			}
 		});

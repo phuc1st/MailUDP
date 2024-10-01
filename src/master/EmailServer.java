@@ -7,6 +7,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -35,7 +36,6 @@ public class EmailServer extends Thread {
 				socket.receive(packet);
 
 				String incoming = new String(packet.getData(), 0, packet.getLength());
-				System.out.println(incoming);
 				String[] parts = incoming.split(":"); // "from:to:message"
 				this.mainForm.appendMessageClient(incoming);
 				if (parts.length == 2) {
@@ -60,8 +60,7 @@ public class EmailServer extends Thread {
 //					}
 					if (clientsAddress.containsKey(receiver)) {
 						clientsAddress.get(receiver).forEach(clientAddress -> {
-							try {
-								System.out.println(receiver+"-"+clientAddress.getInetAddress()+"-"+clientAddress.getPort());
+							try {							
 								sendResponse(socket, clientAddress.getInetAddress(), clientAddress.getPort(), incoming);
 							} catch (IOException e) {
 								// TODO Auto-generated catch block
@@ -78,7 +77,7 @@ public class EmailServer extends Thread {
 	}
 
 	private void saveEmail(String mail, String username) {
-		String directory = "D:\\eclipse-workspace\\MailUDP\\Data\\" + username;
+		String directory = "Data\\" + username;
 
 		File file = new File(directory);
 		if (!file.exists())
@@ -94,7 +93,7 @@ public class EmailServer extends Thread {
 	}
 
 	private void createFolder(String username) {
-		String directory = "D:\\eclipse-workspace\\MailUDP\\Data\\" + username;
+		String directory = "Data\\" + username;
 		File file = new File(directory);
 		if (!file.exists()) {
 			file.mkdirs();
@@ -111,8 +110,7 @@ public class EmailServer extends Thread {
 
 	private void readEmails(String user, DatagramSocket socket, InetAddress address, int clientPort) {
 		this.mainForm.appendMessage("Đang đọc mail của người dùng: " + user);
-		String directory = "D:\\eclipse-workspace\\MailUDP\\Data\\" + user;
-
+		String directory = "Data\\" + user;
 		File dir = new File(directory);
 		if (dir.exists()) {
 			File[] files = dir.listFiles();
