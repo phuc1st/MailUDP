@@ -1,0 +1,1 @@
+{"DATE":"01-10-2024 10:00","SENDER":"tuan","SUBJECT":"wtf","CONTENT":"wtf","RECEIVER":"ha"}
